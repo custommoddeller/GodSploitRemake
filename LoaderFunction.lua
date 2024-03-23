@@ -764,8 +764,8 @@ local function CreateSave()
 	if not isfolder("Godsploit") then
 		makefolder("Godsploit")
 	end
-	if not isfile("Godsploit/Save.json") then
-		writefile("Godsploit/Save.json", "")
+	if not isfile("Godsploit/Save") then
+		writefile("Godsploit/Save", "")
 	end
 end
 
@@ -773,11 +773,11 @@ local function SaveSettings()
 	CreateSave()
 
 	EncodedJSON = httpService:JSONEncode(Settings)
-	writefile("Godsploit/Save.json", EncodedJSON)
+	writefile("Godsploit/Save", EncodedJSON)
 end
 
 local function LoadSettings()
-	local DecodedJSON = httpService:JSONDecode(readfile("Godsploit/Save.json"))
+	local DecodedJSON = httpService:JSONDecode(readfile("Godsploit/Save"))
 
 	for i, v in DecodedJSON do
 		Settings[i].Enabled = v

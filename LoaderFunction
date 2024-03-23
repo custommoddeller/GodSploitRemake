@@ -48,6 +48,9 @@ local GodSploitInfo = {
 
 uninject = function()
 	shared.GodSploitInjected = false
+	for _, v in GodSploit.modules do
+		v = false
+	end
 	wearwarev2:Destroy()
 end
 

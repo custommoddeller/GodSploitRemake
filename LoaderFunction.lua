@@ -49,8 +49,6 @@ function loadSettings()
 	end
 end
 
-loadSettings()
-
 function addDrag(obj)
 	obj.Draggable = true
 	obj.Selectable = true
@@ -773,6 +771,9 @@ UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
 
+task.spawn(function()
+	loadSettings()
+end)
 
 local endTick = tick() - startTick
 

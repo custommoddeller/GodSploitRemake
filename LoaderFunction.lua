@@ -193,20 +193,20 @@ function CreateNotification(title, content, last)
 		TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
 		TextLabel_2.TextYAlignment = Enum.TextYAlignment.Top
 		TextLabel_2.AutomaticSize = Enum.AutomaticSize.XY
-		
+
 		task.spawn(function()
-		
+
 			tweenService:Create(Frame_2, TweenInfo.new(0.2), {Size = UDim2.new(1, 0, 0.105999999, 0)}):Play()
-			
+
 			task.wait(last)
 			tweenService:Create(Frame_2, TweenInfo.new(0.2), {Size = UDim2.new(0, 0, 0, 0)}):Play()
-		
+
 		end)
-		
+
 		return Frame_2
 	end)
-	
-	
+
+
 end
 
 function CreateMainFrame(args)
@@ -308,7 +308,7 @@ function CreateMainFrame(args)
 	UIStroke.Color = Color3.fromRGB(255, 170, 0)
 	UIStroke.Thickness = 0.6
 	UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	
+
 	return Content
 end
 
@@ -318,7 +318,7 @@ local tabs = CreateMainFrame()
 function CreateTab(options)
 	local tabApi = {}
 	tabApi.Enabled = false
-	
+
 	local Tab = Instance.new("TextButton")
 	local Tab2 = Instance.new("TextLabel")
 	Tab.Name = options.TabName
@@ -333,7 +333,7 @@ function CreateTab(options)
 	Tab.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Tab.TextSize = 22.000
 	Tab.TextWrapped = true
-	
+
 	Tab2.Parent = Tab
 	Tab2.AnchorPoint = Vector2.new(0.5, 0.5)
 	Tab2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -348,7 +348,7 @@ function CreateTab(options)
 	Tab2.TextScaled = true
 	Tab2.TextSize = 14.000
 	Tab2.TextWrapped = true
-	
+
 	function tabApi.enable(val)
 		if val then
 			wearwarev2.Frame[options.TabName].Visible = true
@@ -360,20 +360,20 @@ function CreateTab(options)
 			if GodSploit.config.Tweens.Enabled then tweenService:Create(Tab2, TweenInfo.new(GodSploit.config.TweenSpeed.Value), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play() else Tab2.TextColor3 = Color3.fromRGB(255, 255, 255) end
 		end
 	end
-	
+
 	Tab.MouseButton1Click:Connect(function()
 		tabApi.Enabled = not tabApi.Enabled
 		tabApi.enable(tabApi.Enabled)
 	end)
-	
+
 	return tabApi
 end
 
 function CreateWindow(options)
 	GodSploit.UiWindows += 1
-	
+
 	local WindowApi = {}
-	
+
 	local Window = Instance.new("Frame")
 	local Content = Instance.new("Frame")
 	local UIListLayout = Instance.new("UIListLayout")
@@ -445,13 +445,13 @@ function CreateWindow(options)
 	UIAspectRatioConstraint.AspectRatio = 0.528
 	UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
 	UIAspectRatioConstraint.DominantAxis = Enum.DominantAxis.Height
-	
+
 	WindowApi.CreateModule = function(options)
 		local ButtonApi = {}
-		
+
 		scroll.CanvasSize = UDim2.new(0,0,0,scroll.UIListLayout.AbsoluteContentSize.Y + Content.Size.Y.Offset + scroll.UIListLayout.Padding.Offset)
 		Content.Size = UDim2.new(1, 0, Content.Size.Y.Scale + -0.133, 0)
-		
+
 		local Button = Instance.new("TextButton")
 		local TextLabel = Instance.new("TextLabel")
 		local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
@@ -489,13 +489,13 @@ function CreateWindow(options)
 		local enb = GodSploit.modules[options["Name"].Enabled]
 		ButtonApi.ToggleButton = function(newValue)
 			enb = newValue
-			
+
 			if newValue then
 				UIGradient.Enabled = true
 			else
 				UIGradient.Enabled = false
 			end
-			
+
 			options.Callback(newValue)
 			Settings[options["Name"]] = newValue
 			saveSettings()
@@ -504,7 +504,7 @@ function CreateWindow(options)
 			enb = not enb
 			ButtonApi.ToggleButton(enb)
 		end)
-		
+
 		ButtonApi.UninjectConnection = nil
 		ButtonApi.UninjectConnection = wearwarev2:GetAttributeChangedSignal(securityId):Connect(function()
 			if enb then ButtonApi.ToggleButton(false) end
@@ -512,10 +512,10 @@ function CreateWindow(options)
 		end)
 
 		Settings[options["Name"]] = false
-		
+
 		return ButtonApi
 	end
-	
+
 	return WindowApi
 end
 
@@ -553,7 +553,7 @@ task.spawn(function()
 	local combatWindow = CreateWindow({
 		WindowName = "Combat"
 	})
-	
+
 	local oldSpeed
 	local wsConnection
 	local Speed = combatWindow.CreateModule({
@@ -579,7 +579,7 @@ task.spawn(function()
 	local blatantWindow = CreateWindow({
 		WindowName = "Blatant"
 	})
-	
+
 	local oldJump
 	local hjConnection
 	local Highjump = blatantWindow.CreateModule({
@@ -599,7 +599,7 @@ task.spawn(function()
 			end
 		end,
 	})
-	
+
 	local infJumpConnection
 	local InfiniteJump = blatantWindow.CreateModule({
 		Name = "InfiniteJump",
@@ -639,7 +639,7 @@ task.spawn(function()
 	})
 	local oldFOV
 	local FOVChanger = utilityWindow.CreateModule({
-	Name = "FOVChanger",
+		Name = "FOVChanger",
 		Callback = function(callback)
 			if callback then
 				oldFOV = workspace.Camera.FieldOfView
@@ -649,7 +649,7 @@ task.spawn(function()
 			end
 		end,
 	})
-	
+
 
 end)
 
@@ -657,7 +657,7 @@ task.spawn(function()
 	local worldWindow = CreateWindow({
 		WindowName = "World"
 	})
-	
+
 	local espHighlightObjConnection = {}
 	local function addChams(player)
 		local espHighlightObj = Instance.new("Highlight")
@@ -670,19 +670,19 @@ task.spawn(function()
 			if callback then
 				for _, v in players:GetPlayers() do
 					addChams(v)
-					
+
 					espHighlightObjConnection[v.Name] = v.CharacterAdded:Connect(function()	
 						addChams(v)
 					end)
 				end
-				
+
 				players.PlayerAdded:Connect(function(plr)
 					addChams(plr)
 					espHighlightObjConnection[plr.Name] = plr.CharacterAdded:Connect(function()
 						addChams(plr)
 					end)
 				end)
-				
+
 				players.PlayerRemoving:Connect(function(plr)
 					espHighlightObjConnection[plr.Name]:Disconnect()
 				end)
@@ -702,7 +702,7 @@ task.spawn(function()
 	local settingsWindow = CreateWindow({
 		WindowName = "Settings"
 	})
-	
+
 	local uninjectModule = nil
 	local uninjectModule = settingsWindow.CreateModule({
 		Name = "Uninject",
@@ -728,7 +728,7 @@ end
 
 UIS.InputBegan:Connect(function(input)
 	if not shared.GodSploitInjected then return end
-	
+
 	if input.KeyCode == Enum.KeyCode[GodSploit.config.OpenKeybind.Value] then
 		godsploitui()
 	end
@@ -761,6 +761,7 @@ openui.MouseButton1Click:Connect(godsploitui)
 function loadSettings()
 	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
 		Settings[v] = e
+		print(v, e)
 	end
 end
 

@@ -748,11 +748,16 @@ UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
 
+function saveSettings()
+	local jsonencoded = httpService:JSONEncode(Settings)
+	writefile("savedModulesFile.json", jsonencoded)
+end
 
+saveSettings()
 
 task.spawn(function()
 	while wait(2) do
-		for v, e in Settings do
+		for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
 			print(v, e)
 		end
 	end

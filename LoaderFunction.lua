@@ -26,6 +26,23 @@ local Settings = {
 
 }
 
+function addDrag(obj)
+	obj.Draggable = true
+	obj.Selectable = true
+	obj.Active = true
+end
+
+local httpService = gserv("HttpService")
+local tweenService = gserv("TweenService")
+local rbxanalytics = gserv("RbxAnalyticsService")
+local runService = gserv("RunService")
+local players = gserv("Players")
+local rStorage = gserv("ReplicatedStorage")
+local lplr = players.LocalPlayer
+local plrGui = lplr.PlayerGui
+local UIS = gserv("UserInputService")
+local wearwarev2 = Instance.new("ScreenGui")
+
 local SaveFileName = "SavedModules.json"
 
 local function SaveSettings()
@@ -44,23 +61,6 @@ local function LoadSettings()
 end
 
 LoadSettings()
-
-function addDrag(obj)
-	obj.Draggable = true
-	obj.Selectable = true
-	obj.Active = true
-end
-
-local httpService = gserv("HttpService")
-local tweenService = gserv("TweenService")
-local rbxanalytics = gserv("RbxAnalyticsService")
-local runService = gserv("RunService")
-local players = gserv("Players")
-local rStorage = gserv("ReplicatedStorage")
-local lplr = players.LocalPlayer
-local plrGui = lplr.PlayerGui
-local UIS = gserv("UserInputService")
-local wearwarev2 = Instance.new("ScreenGui")
 
 
 local securityName = httpService:GenerateGUID(true)

@@ -3,6 +3,7 @@ local startTick = tick()
 if shared.GodSploitInjected then warn("GodSploit is already injected!") return end
 
 shared.GodSploitInjected = true
+Loaded = false
 
 --local owner = ""
 
@@ -736,7 +737,9 @@ end
 while wait(5) do
 	if not shared.GodSploitInjected then return end
 	
-	SaveSettings()
+	if Loaded then
+		SaveSettings()
+	end
 end
 
 local openui = Instance.new("ImageButton")
@@ -768,5 +771,6 @@ local endTick = tick() - startTick
 wait(5)
 
 LoadSettings()
+Loaded = true
 
 CreateNotification("GodSploit","Loaded in "..tostring(endTick):sub(1, 6).." seconds", 10)

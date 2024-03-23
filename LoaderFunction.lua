@@ -716,7 +716,7 @@ end)
 function saveSettings()
 	if runService:IsStudio() then return end
 	
-	writefile("savedGodsploitSettings", httpService:JSONEncode(GodSploit.modules))
+	writefile("savedGodsploitSettings.json", httpService:JSONEncode(GodSploit.modules))
 end
 
 while wait(5) do

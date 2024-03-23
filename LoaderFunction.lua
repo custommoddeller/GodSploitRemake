@@ -486,7 +486,7 @@ function CreateWindow(options)
 		UIGradient.Rotation = 90
 		UIGradient.Parent = TextLabel
 		UIGradient.Enabled = false
-		local enb = GodSploit.modules[options["Name"].Enabled]
+		local enb = GodSploit.modules[options["Name"]].Enabled
 		ButtonApi.ToggleButton = function(newValue)
 			enb = newValue
 			
@@ -504,7 +504,9 @@ function CreateWindow(options)
 			enb = not enb
 			ButtonApi.ToggleButton(enb)
 		end)
-		
+		GodSploit.modules[options["Name"]].thing = function()
+			ButtonApi.ToggleButton(Settings[options["Name"]])
+		end
 		ButtonApi.UninjectConnection = nil
 		ButtonApi.UninjectConnection = wearwarev2:GetAttributeChangedSignal(securityId):Connect(function()
 			if enb then ButtonApi.ToggleButton(false) end
@@ -761,6 +763,7 @@ openui.MouseButton1Click:Connect(godsploitui)
 function loadSettings()
 	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
 		Settings[v] = e
+		GodSploit.modules[v].thing(e)
 	end
 end
 

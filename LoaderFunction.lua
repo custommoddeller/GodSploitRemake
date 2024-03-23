@@ -725,7 +725,8 @@ local function SaveSettings()
 	local JSONEncodeSettings = httpService:JSONEncode(Settings)
 
 	writefile("GodSploitBedwarsConfigSaving/" .. SaveFileName, JSONEncodeSettings)	
-	CreateNotification("GodSploit", "Saved Settings", 2)
+	print("saved")
+	CreateNotification("GodSploit", "Saved settings", 2)
 	
 end
 
@@ -739,9 +740,9 @@ end
 
 task.spawn(function()
 	while wait(5) do
-		if Loaded then
+		--if Loaded then
 			SaveSettings()
-		end
+		--end
 	end
 end)
 

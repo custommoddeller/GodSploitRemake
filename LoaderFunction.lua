@@ -578,7 +578,7 @@ task.spawn(function()
 				runService:BindToRenderStep("DirectionAssistLoop", 1, function()
 					target = EntityNearPosition(10)
 					if target ~= nil then
-						print(target.Name)
+						lplr.Character:SetPrimaryPartCFrame(CFrame.new(lplr.Character.PrimaryPart.Position,Vector3.new(target.Character:FindFirstChild("HumanoidRootPart").Position.X,lplr.Character.PrimaryPart.Position.Y,target.Character:FindFirstChild("HumanoidRootPart").Position.Z)))
 					end
 				end)
 			else

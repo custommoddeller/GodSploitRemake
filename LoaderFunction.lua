@@ -751,7 +751,7 @@ openui.MouseButton1Click:Connect(godsploitui)
 
 
 task.spawn(function()
-	while wait(10) do
+	while wait(2) do
 		for v, e in Settings do
 			print(v, e)
 		end

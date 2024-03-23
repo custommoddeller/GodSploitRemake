@@ -534,14 +534,20 @@ task.spawn(function()
 	})
 	
 	local oldSpeed
+	local wsConnection
 	local Speed = combatWindow.CreateModule({
 		Name = "Speed",
 		Callback = function(callback)
 			if callback then
 				oldSpeed = lplr.Character.Humanoid.WalkSpeed
 				lplr.Character.Humanoid.WalkSpeed = oldSpeed + 25
+				wsConnection = lplr.CharacterAdded:Connect(function()
+					oldSpeed = lplr.Character.Humanoid.WalkSpeed
+					lplr.Character.Humanoid.WalkSpeed = oldSpeed + 25
+				end)
 			else
 				lplr.Character.Humanoid.WalkSpeed = oldSpeed
+				wsConnection:Disconnect()
 			end
 		end,
 	})
@@ -553,14 +559,20 @@ task.spawn(function()
 	})
 	
 	local oldJump
+	local hjConnection
 	local Highjump = blatantWindow.CreateModule({
 		Name = "Highjump",
 		Callback = function(callback)
 			if callback then
 				oldJump = lplr.Character.Humanoid.JumpPower
 				lplr.Character.Humanoid.JumpPower = oldJump + 25
+				hjConnection = lplr.CharacterAdded:Connect(function()
+					oldJump = lplr.Character.Humanoid.JumpPower
+					lplr.Character.Humanoid.JumpPower = oldJump + 25
+				end)
 			else
 				lplr.Character.Humanoid.JumpPower = oldJump
+				hjConnection:Disconnect()
 			end
 		end,
 	})
@@ -636,7 +648,7 @@ task.spawn(function()
 				for _, v in players:GetPlayers() do
 					addChams(v)
 					
-					espHighlightObjConnection[v.Name] = v.CharacterAdded:Connect(function()
+					espHighlightObjConnection[v.Name] = v.CharacterAdded:Connect(function()	
 						addChams(v)
 					end)
 				end

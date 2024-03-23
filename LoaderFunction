@@ -564,7 +564,15 @@ task.spawn(function()
 		WindowName = "Settings"
 	})
 	
-	
+	local uninject = function() end
+	settingsWindow.CreateModule({
+		Name = "Uninject",
+		Callback = function(callback)
+			if callback then
+				uninject()
+			end
+		end,
+	})
 end)
 
 function godsploitui() 
@@ -579,6 +587,8 @@ end
 --if GodSploit.Open.Value == false then godsploitui() end
 
 UIS.InputBegan:Connect(function(input)
+	if not shared.GodSploitInjected then return end
+	
 	if input.KeyCode == Enum.KeyCode[GodSploit.config.OpenKeybind.Value] then
 		godsploitui()
 	end
@@ -617,3 +627,8 @@ wait(1)
 CreateNotification("GodSploit","look i reversed your name you are now "..string.reverse(lplr.Name).." :D", 7)
 wait(1)
 CreateNotification("Module Enabled","Fly (ok i didnt even enable anything but pretend i did)", 7)
+
+uninject = function()
+	shared.GodSploitInjected = false
+	wearwarev2:Destroy()
+end

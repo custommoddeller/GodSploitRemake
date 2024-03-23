@@ -725,6 +725,7 @@ local function SaveSettings()
 	local JSONEncodeSettings = httpService:JSONEncode(Settings)
 
 	writefile("GodSploitBedwarsConfigSaving/" .. SaveFileName, JSONEncodeSettings)	
+	CreateNotification("GodSploit", "Saved Settings", 2)
 	
 end
 

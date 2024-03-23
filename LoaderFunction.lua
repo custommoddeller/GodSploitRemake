@@ -753,10 +753,9 @@ function saveSettings()
 	writefile("savedModulesFile.json", jsonencoded)
 end
 
-saveSettings()
-
 task.spawn(function()
 	while wait(2) do
+		saveSettings()
 		for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
 			print(v, e)
 		end

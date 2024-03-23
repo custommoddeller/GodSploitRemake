@@ -26,6 +26,25 @@ local Settings = {
 
 }
 
+local SaveFileName = "SavedModules.json"
+
+local function SaveSettings()
+	local JSONEncodeSettings = httpService:JSONEncode(Settings)
+
+	writefile("GodSploitBedwarsConfigSaving/" .. SaveFileName, JSONEncodeSettings)	
+	print("saved")
+	CreateNotification("GodSploit", "Saved settings", 2)
+
+end
+
+local function LoadSettings()
+	Settings = httpService:JSONDecode(readfile("GodSploitBedwarsConfigSaving/" .. SaveFileName))
+
+	Loaded = true
+end
+
+LoadSettings()
+
 function addDrag(obj)
 	obj.Draggable = true
 	obj.Selectable = true
@@ -473,7 +492,7 @@ function CreateWindow(options)
 		UIGradient.Parent = TextLabel
 		UIGradient.Enabled = false
 		local enb = GodSploit.modules[options["Name"].Enabled]
-
+		Settings[options.Name] = {}
 		ButtonApi.ToggleButton = function(newValue)
 			enb = newValue
 			
@@ -722,28 +741,9 @@ UIS.InputBegan:Connect(function(input)
 	end
 end)
 
-local SaveFileName = "Saved.json"
-
-local function SaveSettings()
-	local JSONEncodeSettings = httpService:JSONEncode(Settings)
-
-	writefile("GodSploitBedwarsConfigSaving/" .. SaveFileName, JSONEncodeSettings)	
-	print("saved")
-	CreateNotification("GodSploit", "Saved settings", 2)
-	
-end
-
-local function LoadSettings()
-	Settings = httpService:JSONDecode(readfile("GodSploitBedwarsConfigSaving/" .. SaveFileName))
-
-	Loaded = true
-end
-
 task.spawn(function()
 	while wait(5) do
-		--if Loaded then
-			SaveSettings()
-		--end
+		SaveSettings()
 	end
 end)
 
@@ -772,9 +772,6 @@ UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
 
 local endTick = tick() - startTick
-
-wait(5)
-
 LoadSettings()
 
 CreateNotification("GodSploit","Loaded in "..tostring(endTick):sub(1, 6).." seconds", 10)

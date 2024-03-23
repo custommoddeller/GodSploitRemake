@@ -472,7 +472,6 @@ function CreateWindow(options)
 		UIGradient.Rotation = 90
 		UIGradient.Parent = TextLabel
 		UIGradient.Enabled = false
-		Settings[options["Name"]] = {}
 		local enb = GodSploit.modules[options["Name"].Enabled]
 		
 		ButtonApi.ToggleButton = function(newValue)
@@ -485,6 +484,7 @@ function CreateWindow(options)
 			end
 			
 			options.Callback(newValue)
+			Settings[options.Name] = {Enabled = newValue}
 		end
 		
 		Button.MouseButton1Click:Connect(function()
@@ -544,7 +544,6 @@ task.spawn(function()
 	local Speed = combatWindow.CreateModule({
 		Name = "Speed",
 		Callback = function(callback)
-			Settings["Speed"].Enabled = callback
 			if callback then
 				oldSpeed = lplr.Character.Humanoid.WalkSpeed
 				lplr.Character.Humanoid.WalkSpeed = oldSpeed + 25
@@ -571,7 +570,6 @@ task.spawn(function()
 	local Highjump = blatantWindow.CreateModule({
 		Name = "Highjump",
 		Callback = function(callback)
-			Settings["Highjump"].Enabled = callback
 			if callback then
 				oldJump = lplr.Character.Humanoid.JumpPower
 				lplr.Character.Humanoid.JumpPower = oldJump + 25
@@ -591,7 +589,6 @@ task.spawn(function()
 	local InfiniteJump = blatantWindow.CreateModule({
 		Name = "InfiniteJump",
 		Callback = function(callback)
-			Settings["InfiniteJump"].Enabled = callback
 			if callback then
 				infJumpConnection = UIS.JumpRequest:Connect(function()
 					lplr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
@@ -612,7 +609,6 @@ task.spawn(function()
 	local DirectionAssist = utilityWindow.CreateModule({
 		Name = "DirectionAssist",
 		Callback = function(callback)
-			Settings["DirectionAssist"].Enabled = callback
 			if callback then
 				runService:BindToRenderStep("DirectionAssistLoop", 1, function()
 					target = EntityNearPosition(10)
@@ -630,7 +626,6 @@ task.spawn(function()
 	local FOVChanger = utilityWindow.CreateModule({
 	Name = "FOVChanger",
 		Callback = function(callback)
-			Settings["FOVChanger"].Enabled = callback
 			if callback then
 				oldFOV = workspace.Camera.FieldOfView
 				workspace.Camera.FieldOfView = 120
@@ -657,7 +652,6 @@ task.spawn(function()
 	local Chams = worldWindow.CreateModule({
 		Name = "Chams",
 		Callback = function(callback)
-			Settings["Chams"].Enabled = callback
 			if callback then
 				for _, v in players:GetPlayers() do
 					addChams(v)
@@ -725,17 +719,20 @@ UIS.InputBegan:Connect(function(input)
 	end
 end)
 
+local SaveFileName = "Saved.json"
 
-
-local function SaveSettings()	
+local function SaveSettings()
 	local JSONEncodeSettings = httpService:JSONEncode(Settings)
 
-	writefile("GodSploitBedwarsConfigSaving/GodsploitSettings.json", JSONEncodeSettings)	
+	writefile("GodSploitBedwarsConfigSaving/" .. SaveFileName, JSONEncodeSettings)	
+	
 end
 
 local function LoadSettings()
-	if isfile("GodSploitBedwarsConfigSaving/GodsploitSettings.json") then
-		Settings = httpService:JSONDecode(readfile("GodSploitBedwarsConfigSaving/GodsploitSettings.json"))
+	if isfile("GodSploitBedwarsConfigSaving/" .. SaveFileName) then
+		Settings = httpService:JSONDecode(readfile("GodSploitBedwarsConfigSaving/" .. SaveFileName))
+
+		Loaded = true
 	end
 end
 
@@ -776,6 +773,5 @@ local endTick = tick() - startTick
 wait(5)
 
 LoadSettings()
-Loaded = true
 
 CreateNotification("GodSploit","Loaded in "..tostring(endTick):sub(1, 6).." seconds", 10)

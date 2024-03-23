@@ -765,8 +765,10 @@ function loadSettings()
 	end
 end
 
-while wait(5) do
-	loadSettings()
+task.spawn(function()
+	while wait(5) do
+		loadSettings()
+	end
 end
 
 

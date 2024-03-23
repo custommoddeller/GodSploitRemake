@@ -473,7 +473,7 @@ function CreateWindow(options)
 		UIGradient.Parent = TextLabel
 		UIGradient.Enabled = false
 		local enb = GodSploit.modules[options["Name"].Enabled]
-		
+
 		ButtonApi.ToggleButton = function(newValue)
 			enb = newValue
 			
@@ -486,7 +486,10 @@ function CreateWindow(options)
 			options.Callback(newValue)
 			Settings[options.Name] = {Enabled = newValue}
 		end
-		
+		if table.find(Settings, options["Name"]) then
+			ButtonApi.ToggleButton(Settings[options["Name"].Enabled])
+		end
+
 		Button.MouseButton1Click:Connect(function()
 			enb = not enb
 			ButtonApi.ToggleButton(enb)

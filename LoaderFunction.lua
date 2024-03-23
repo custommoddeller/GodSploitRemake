@@ -622,6 +622,45 @@ task.spawn(function()
 	local worldWindow = CreateWindow({
 		WindowName = "World"
 	})
+	
+	local espHighlightObjConnection = {}
+	local function addChams(player)
+		local espHighlightObj = Instance.new("Highlight")
+		espHighlightObj.Parent = player.Character
+		espHighlightObj.Name = "espHighlightObj"
+	end
+	local Chams = worldWindow.CreateModule({
+		Name = "Chams",
+		Callback = function(callback)
+			if callback then
+				for _, v in players:GetPlayers() do
+					addChams(v)
+					
+					espHighlightObjConnection[v.Name] = v.CharacterAdded:Connect(function()
+						addChams(v)
+					end)
+				end
+				
+				players.PlayerAdded:Connect(function(plr)
+					addChams(plr)
+					espHighlightObjConnection[plr.Name] = plr.CharacterAdded:Connect(function()
+						addChams(plr)
+					end)
+				end)
+				
+				players.PlayerRemoving:Connect(function(plr)
+					espHighlightObjConnection[plr.Name]:Disconnect()
+				end)
+			else
+				for _, v in players:GetPlayers() do
+					if v.Character:FindFirstChild("espHighlightObj") then
+						v.Character.espHighlightObj:Destroy()
+						espHighlightObjConnection[v.Name]:Disconnect()
+					end
+				end
+			end
+		end,
+	})
 end)
 
 task.spawn(function()

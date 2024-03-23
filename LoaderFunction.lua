@@ -750,23 +750,20 @@ openui.MouseButton1Click:Connect(godsploitui)
 
 
 local function CreateSave()
-	if not isfolder("Godsploit") then
-		makefolder("Godsploit")
-	end
-	if not isfile("Godsploit/Save") then
-		writefile("Godsploit/Save", "")
+	if not isfile("GodsploitSave") then
+		writefile("GodsploitSave", "")
 	end
 end
 
 local function SaveSettings()
 	CreateSave()
 
-	EncodedJSON = httpService:JSONEncode(Settings)
-	writefile("Godsploit/Save", EncodedJSON)
+	local EncodedJSON = httpService:JSONEncode(Settings)
+	writefile("GodsploitSave", EncodedJSON)
 end
 
 local function LoadSettings()
-	local DecodedJSON = httpService:JSONDecode(readfile("Godsploit/Save"))
+	local DecodedJSON = httpService:JSONDecode(readfile("GodsploitSave"))
 
 	for i, v in DecodedJSON do
 		Settings[i] = v

@@ -486,7 +486,7 @@ function CreateWindow(options)
 		UIGradient.Rotation = 90
 		UIGradient.Parent = TextLabel
 		UIGradient.Enabled = false
-		local enb = GodSploit.modules[options["Name"].Enabled]
+		local enb = GodSploit.modules[options["Name"]].Enabled
 		ButtonApi.ToggleButton = function(newValue)
 			enb = newValue
 			
@@ -757,6 +757,8 @@ UIStroke.Color = Color3.fromRGB(255, 170, 0)
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
+
+if not isfile("savedModulesFile.json") then writefile("savedModulesFile.json", "{}")
 
 function loadSettings()
 	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do

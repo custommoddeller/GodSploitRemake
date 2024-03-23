@@ -486,7 +486,7 @@ function CreateWindow(options)
 		UIGradient.Rotation = 90
 		UIGradient.Parent = TextLabel
 		UIGradient.Enabled = false
-		local enb = GodSploit.modules[options["Name"]].Enabled
+		local enb = GodSploit.modules[options["Name"].Enabled]
 		ButtonApi.ToggleButton = function(newValue)
 			enb = newValue
 			
@@ -504,7 +504,7 @@ function CreateWindow(options)
 			enb = not enb
 			ButtonApi.ToggleButton(enb)
 		end)
-		GodSploit.modules[options["Name"]].thing = function()
+		GodSploit.modules[options["Name"].thing] = function()
 			ButtonApi.ToggleButton(Settings[options["Name"]])
 		end
 		ButtonApi.UninjectConnection = nil

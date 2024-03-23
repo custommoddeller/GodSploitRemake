@@ -50,7 +50,6 @@ local function SaveSettings()
 
 	writefile("GodSploitBedwarsConfigSaving/" .. SaveFileName, JSONEncodeSettings)	
 	print("saved")
-	CreateNotification("GodSploit", "Saved settings", 2)
 
 end
 

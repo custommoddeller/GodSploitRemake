@@ -488,7 +488,7 @@ function CreateWindow(options)
 			end
 			
 			options.Callback(newValue)
-			
+			Settings[options["Name"]] = newValue
 		end
 		Button.MouseButton1Click:Connect(function()
 			enb = not enb

@@ -758,14 +758,14 @@ UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
 
-if not isfile("savedModulesFile.json") then writefile("savedModulesFile.json", "{}")
+--[[if not isfile("savedModulesFile.json") then writefile("savedModulesFile.json", "{}")
 
 function loadSettings()
 	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
 		Settings[v] = e
         print(v, e)
 	end
-end
+end--]]
 
 
 local endTick = tick() - startTick

@@ -22,26 +22,15 @@ local GodSploit = {
 	}
 }
 
-local DefaultSetting = {Properties = {Value = false}}
-
-local MetaTable = {__index, DefaultSetting.Properties}
-
 local Settings = {
 	Speed = false,
 	Highjmup = false,
 	InfiniteJump = false,
 	DirectionAssist = false,
-	FOVChanger	 = false,
+	FOVChanger = false,
 	Chams = false,
 	Uninject = false
 }
-
-task.spawn(function()
-	for i, v in next, Settings do
-		setmetatable(v, MetaTable)
-	end
-end)
-
 
 function addDrag(obj)
 	obj.Draggable = true
@@ -758,34 +747,6 @@ UIStroke.Color = Color3.fromRGB(255, 170, 0)
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
-
-
-local function CreateSave()
-	if not isfolder("Godsploit") then
-		makefolder("Godsploit")
-	end
-	if not isfile("Godsploit/Save") then
-		writefile("Godsploit/Save", "")
-	end
-end
-
-local function SaveSettings()
-	CreateSave()
-
-	EncodedJSON = httpService:JSONEncode(Settings)
-	writefile("Godsploit/Save", EncodedJSON)
-end
-
-local function LoadSettings()
-	local DecodedJSON = httpService:JSONDecode(readfile("Godsploit/Save"))
-
-	for i, v in DecodedJSON do
-		Settings[i].Enabled = v
-	end
-end
-
-CreateSave()
-LoadSettings()
 
 task.spawn(function()
 	while wait(10) do

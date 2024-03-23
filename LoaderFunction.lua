@@ -765,6 +765,10 @@ function loadSettings()
 	end
 end
 
+while wait(5) do
+	loadSettings()
+end
+
 
 local endTick = tick() - startTick
 

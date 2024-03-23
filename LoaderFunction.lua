@@ -499,7 +499,7 @@ function CreateWindow(options)
 			end
 			
 			options.Callback(newValue)
-			Settings[options.Name].Enabled = newValue
+			
 		end
 		Button.MouseButton1Click:Connect(function()
 			enb = not enb
@@ -512,7 +512,7 @@ function CreateWindow(options)
 			ButtonApi.UninjectConnection:Disconnect()
 		end)
 
-		ButtonApi.ToggleButton(Settings[options["Name"]].Enabled)
+		Settings[options["Name"]].Enabled = Settings[options["Name"].Enabled]
 		
 		return ButtonApi
 	end

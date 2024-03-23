@@ -312,6 +312,20 @@ function CreateMainFrame(args)
 	return Content
 end
 
+function loadSettings()
+	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
+		Settings[v] = e
+		print(v, e, "ok")
+	end
+end
+
+task.spawn(function()
+	while wait(5) do
+		loadSettings()
+	end
+end)
+
+loadSettings()
 
 local tabs = CreateMainFrame()
 
@@ -511,10 +525,6 @@ function CreateWindow(options)
 			if enb then ButtonApi.ToggleButton(false) end
 			ButtonApi.UninjectConnection:Disconnect()
 		end)
-		
-		GodSploit.modules[options["Name"].thing] = function(x)
-			ButtonApi.ToggleButton(x)
-		end
 
 		Settings[options["Name"]] = false
 
@@ -762,20 +772,6 @@ UIStroke.Color = Color3.fromRGB(255, 170, 0)
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
-
-function loadSettings()
-	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
-		Settings[v] = e
-		GodSploit.modules[v].thing(e)
-		print(v, e)
-	end
-end
-
-task.spawn(function()
-	while wait(5) do
-		loadSettings()
-	end
-end)
 
 
 local endTick = tick() - startTick

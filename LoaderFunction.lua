@@ -39,8 +39,9 @@ local wearwarev2 = Instance.new("ScreenGui")
 
 
 local securityName = httpService:GenerateGUID(true)
+local securityId = math.random(1, 9e9)
 
-wearwarev2:SetAttribute(securityName, true)
+wearwarev2:SetAttribute(securityId, true)
 local GodSploitInfo = {
 	GodSploitVersion = "GodSploit V2.0.0",
 	Resolution = "1920x1080",
@@ -50,7 +51,7 @@ local GodSploitInfo = {
 
 uninject = function()
 	shared.GodSploitInjected = false
-	wearwarev2:SetAttribute(securityName, false)
+	wearwarev2:SetAttribute(securityId, false)
 	wearwarev2:Destroy()
 end
 
@@ -478,7 +479,7 @@ function CreateWindow(options)
 		end)
 		
 		ButtonApi.UninjectConnection = nil
-		ButtonApi.UninjectConnection = wearwarev2:GetAttributeChangedSignal(securityName):Connect(function()
+		ButtonApi.UninjectConnection = wearwarev2:GetAttributeChangedSignal(securityId):Connect(function()
 			ButtonApi.ToggleButton(false)
 			ButtonApi.UninjectConnection:Disconnect()
 		end)

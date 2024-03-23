@@ -21,6 +21,10 @@ local GodSploit = {
 	}
 }
 
+local Settings = {
+
+}
+
 function addDrag(obj)
 	obj.Draggable = true
 	obj.Selectable = true
@@ -467,6 +471,7 @@ function CreateWindow(options)
 		UIGradient.Rotation = 90
 		UIGradient.Parent = TextLabel
 		UIGradient.Enabled = false
+		Settings[options["Name"]] = {}
 		local enb = GodSploit.modules[options["Name"].Enabled]
 		
 		ButtonApi.ToggleButton = function(newValue)
@@ -479,6 +484,7 @@ function CreateWindow(options)
 			end
 			
 			options.Callback(newValue)
+			Settings[options["Name"]].Enabled = newValue
 		end
 		
 		Button.MouseButton1Click:Connect(function()
@@ -713,16 +719,24 @@ UIS.InputBegan:Connect(function(input)
 	end
 end)
 
-function saveSettings()
-	if runService:IsStudio() then return end
-	
-	writefile("savedGodsploitSettings.json", httpService:JSONEncode(GodSploit.modules))
+
+
+local function SaveSettings()	
+	local JSONEncodeSettings = httpService:JSONEncode(Settings)
+
+	writefile("GodSploitBedwarsConfigSaving/GodsploitSettings.json", JSONEncodeSettings)	
+end
+
+local function LoadSettings()
+	if isfile("GodSploitBedwarsConfigSaving/GodsploitSettings.json") then
+		Settings = httpService:JSONDecode(readfile("GodSploitBedwarsConfigSaving/GodsploitSettings.json"))
+	end
 end
 
 while wait(5) do
 	if not shared.GodSploitInjected then return end
 	
-	saveSettings()
+	SaveSettings()
 end
 
 local openui = Instance.new("ImageButton")
@@ -750,4 +764,9 @@ UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
 
 local endTick = tick() - startTick
+
+wait(5)
+
+LoadSettings()
+
 CreateNotification("GodSploit","Loaded in "..tostring(endTick):sub(1, 6).." seconds", 10)

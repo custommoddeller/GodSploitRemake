@@ -66,31 +66,6 @@ uninject = function()
 	wearwarev2:Destroy()
 end
 
-local function CreateSave()
-	if not isfolder("Godsploit") then
-		makefolder("Godsploit")
-	end
-	if not isfile("Godsploit/Save.json") then
-		writefile("Godsploit/Save.json", "")
-	end
-end
-
-local function SaveSettings()
-	CreateSave()
-
-	EncodedJSON = httpService:JSONEncode(Settings)
-	writefile("Godsploit/Save.json", EncodedJSON)
-end
-
-local function LoadSettings()
-	local DecodedJSON = httpService:JSONDecode(readfile("Godsploit/Save.json"))
-	
-	Settings = DecodedJSON
-end
-
-CreateSave()
-LoadSettings()
-
 function EntityNearPosition(distance)
 	for _, v in players:GetPlayers() do
 		if (v.Character.PrimaryPart.Position - lplr.Character.PrimaryPart.Position).magnitude < distance and v ~= lplr then return v else continue end
@@ -772,6 +747,32 @@ UIStroke.Color = Color3.fromRGB(255, 170, 0)
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
+
+
+local function CreateSave()
+	if not isfolder("Godsploit") then
+		makefolder("Godsploit")
+	end
+	if not isfile("Godsploit/Save.json") then
+		writefile("Godsploit/Save.json", "")
+	end
+end
+
+local function SaveSettings()
+	CreateSave()
+
+	EncodedJSON = httpService:JSONEncode(Settings)
+	writefile("Godsploit/Save.json", EncodedJSON)
+end
+
+local function LoadSettings()
+	local DecodedJSON = httpService:JSONDecode(readfile("Godsploit/Save.json"))
+
+	Settings = DecodedJSON
+end
+
+CreateSave()
+LoadSettings()
 
 task.spawn(function()
 	while wait(10) do

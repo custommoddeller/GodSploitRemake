@@ -32,6 +32,7 @@ local tweenService = gserv("TweenService")
 local rbxanalytics = gserv("RbxAnalyticsService")
 local runService = gserv("RunService")
 local players = gserv("Players")
+local rStorage = gserv("ReplicatedStorage")
 local lplr = players.LocalPlayer
 local plrGui = lplr.PlayerGui
 local UIS = gserv("UserInputService")
@@ -560,6 +561,20 @@ task.spawn(function()
 				lplr.Character.Humanoid.JumpPower = oldJump + 25
 			else
 				lplr.Character.Humanoid.JumpPower = oldJump
+			end
+		end,
+	})
+	
+	local infJumpConnection
+	local InfiniteJump = blatantWindow.CreateModule({
+		Name = "InfiniteJump",
+		Callback = function(callback)
+			if callback then
+				infJumpConnection = rStorage.JumpRequest:Connect(function()
+					lplr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+				end)
+			else
+				infJumpConnection:Disconnect()
 			end
 		end,
 	})

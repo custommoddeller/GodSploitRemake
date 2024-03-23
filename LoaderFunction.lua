@@ -69,7 +69,7 @@ end
 
 
 function saveSettings()
-	if shared.GodSploitInjected then
+	if shared.GodSploitInjected and isfile("savedModulesFile.json") then
 		local jsonencoded = httpService:JSONEncode(Settings)
 		writefile("savedModulesFile.json", jsonencoded)
 	end
@@ -769,7 +769,7 @@ task.spawn(function()
 	while wait(5) do
 		loadSettings()
 	end
-end
+end)
 
 
 local endTick = tick() - startTick

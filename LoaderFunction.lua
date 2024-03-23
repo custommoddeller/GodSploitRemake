@@ -514,7 +514,7 @@ function CreateWindow(options)
 			options.Callback(newValue)
 			Settings[options["Name"]] = newValue
 		end
-		ButtonApi.ToggleButton(Settings[options["Name"]])
+		if Settings[options["Name"]] == true then ButtonApi.ToggleButton(true) end
 		Button.MouseButton1Click:Connect(function()
 			enb = not enb
 			ButtonApi.ToggleButton(enb)

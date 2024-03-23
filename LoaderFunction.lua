@@ -776,7 +776,7 @@ LoadSettings()
 
 task.spawn(function()
 	while wait(10) do
-		if not shared.GodSploitInjected then return end
+		--if not shared.GodSploitInjected then return end
 		
 		SaveSettings()
 		print("Saved settings prolly not lol")

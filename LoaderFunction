@@ -37,8 +37,10 @@ local plrGui = lplr.PlayerGui
 local UIS = gserv("UserInputService")
 local wearwarev2 = Instance.new("ScreenGui")
 
+
 local securityName = httpService:GenerateGUID(true)
 
+wearwarev2:SetAttribute(securityName, true)
 local GodSploitInfo = {
 	GodSploitVersion = "GodSploit V2.0.0",
 	Resolution = "1920x1080",
@@ -48,9 +50,7 @@ local GodSploitInfo = {
 
 uninject = function()
 	shared.GodSploitInjected = false
-	for _, v in GodSploit.modules do
-		v.Enabled = false
-	end
+	wearwarev2:SetAttribute(securityName, false)
 	wearwarev2:Destroy()
 end
 
@@ -477,6 +477,12 @@ function CreateWindow(options)
 			ButtonApi.ToggleButton(enb)
 		end)
 		
+		ButtonApi.UninjectConnection = nil
+		ButtonApi.UninjectConnection = wearwarev2:GetAttributeChangedSignal(securityName):Connect(function()
+			ButtonApi.ToggleButton(false)
+			ButtonApi.UninjectConnection:Disconnect()
+		end)
+		
 		return ButtonApi
 	end
 	
@@ -526,6 +532,7 @@ task.spawn(function()
 			if callback then
 				oldSpeed = lplr.Character.Humanoid.WalkSpeed
 				lplr.Character.Humanoid.WalkSpeed = oldSpeed + 25
+				print(Speed.Enabled)
 			else
 				lplr.Character.Humanoid.WalkSpeed = oldSpeed
 			end
@@ -558,13 +565,16 @@ task.spawn(function()
 		WindowName = "Utility"
 	})
 	
-	local ButtonTest = {Enabled = false}
-	ButtonTest = utilityWindow.CreateModule({
-	Name = "ButtonTest",
+	local FOVChanger = {Enabled = false}
+	local oldFOV
+	FOVChanger = utilityWindow.CreateModule({
+	Name = "FOVChanger",
 		Callback = function(callback)
 			if callback then
-				print("hi")
-				ButtonTest.ToggleButton(false)
+				oldFOV = workspace.FieldOfView
+				workspace.Camera.FieldOfView = 120
+			else
+				workspace.Camera.FieldOfView = oldFOV
 			end
 		end,
 	})

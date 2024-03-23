@@ -22,16 +22,6 @@ local GodSploit = {
 	}
 }
 
-local Settings = {
-	Speed = false,
-	Highjmup = false,
-	InfiniteJump = false,
-	DirectionAssist = false,
-	FOVChanger = false,
-	Chams = false,
-	Uninject = false
-}
-
 function addDrag(obj)
 	obj.Draggable = true
 	obj.Selectable = true
@@ -500,8 +490,6 @@ function CreateWindow(options)
 			if enb then ButtonApi.ToggleButton(false) end
 			ButtonApi.UninjectConnection:Disconnect()
 		end)
-
-		Settings[options["Name"]].Enabled = Settings[options["Name"].Enabled]
 		
 		return ButtonApi
 	end
@@ -747,16 +735,6 @@ UIStroke.Color = Color3.fromRGB(255, 170, 0)
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
-
-task.spawn(function()
-	while wait(10) do
-		if not shared.GodSploitInjected then return end
-		
-		SaveSettings()
-		print("Saved settings prolly not lol")
-	end
-end)
-
 
 local endTick = tick() - startTick
 

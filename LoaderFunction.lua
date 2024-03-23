@@ -42,21 +42,6 @@ local UIS = gserv("UserInputService")
 local wearwarev2 = Instance.new("ScreenGui")
 local SaveFileName = "SavedModules.json"
 
-local function SaveSettings()
-	local JSONEncodeSettings = httpService:JSONEncode(Settings)
-
-	writefile("GodSploitBedwarsConfigSaving/" .. SaveFileName, JSONEncodeSettings)	
-	print("saved")
-
-end
-
-local function LoadSettings()
-	Settings = httpService:JSONDecode(readfile("GodSploitBedwarsConfigSaving/" .. SaveFileName))
-
-	Loaded = true
-end
-
-
 local securityName = httpService:GenerateGUID(true)
 local securityId = math.random(1, 7654321)
 
@@ -486,7 +471,6 @@ function CreateWindow(options)
 		UIGradient.Parent = TextLabel
 		UIGradient.Enabled = false
 		local enb = GodSploit.modules[options["Name"].Enabled]
-		Settings[options.Name] = {}
 		ButtonApi.ToggleButton = function(newValue)
 			enb = newValue
 			
@@ -735,12 +719,6 @@ UIS.InputBegan:Connect(function(input)
 	end
 end)
 
-task.spawn(function()
-	while wait(5) do
-		SaveSettings()
-	end
-end)
-
 local openui = Instance.new("ImageButton")
 local UICorner = Instance.new("UICorner")
 local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
@@ -765,7 +743,38 @@ UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
 
-local endTick = tick() - startTick
+local function CreateSave()
+	if not isfolder("GodsploitV2") then
+		makefolder("GodsploitV2")
+	end
+	if not isfile("GodsploitV2/Save.json") then
+		writefile("GodsploitV2/Save.json", "")
+	end
+end
+
+local function SaveSettings()
+	CreateSave()
+
+	EncodedJSON = httpService:JSONEncode(Settings)
+	writefile("GodsploitV2/Save.json", EncodedJSON)
+end
+
+local function LoadSettings()
+	Settings = httpService:JSONDecode(readfile("GodsploitV2/Save.json"))
+end
+
+CreateSave()
 LoadSettings()
+
+task.spawn(function()
+	while wait(10) do
+		if not shared.GodSploitInjected then return end
+		
+		SaveSettings()
+	end
+end)
+
+
+local endTick = tick() - startTick
 
 CreateNotification("GodSploit","Loaded in "..tostring(endTick):sub(1, 6).." seconds", 10)

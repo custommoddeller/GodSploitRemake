@@ -32,7 +32,7 @@ local GodSploit = {
 	}
 }
 
-local Settings = (isfile("savedModulesFile.json") and httpService:JSONDecode(readfile("savedModulesFile.json"))) or {
+local Settings = {
 	Speed = false,
 	Highjump = false,
 	InfiniteJump = false,
@@ -43,11 +43,14 @@ local Settings = (isfile("savedModulesFile.json") and httpService:JSONDecode(rea
 }
 
 function loadSettings()
+	if not shared.GodSploitInjected then return end
 	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
 		Settings[v] = e
 		print(v, e, "ok")
 	end
 end
+
+loadSettings()
 
 function addDrag(obj)
 	obj.Draggable = true
@@ -76,7 +79,8 @@ end
 
 
 function saveSettings()
-	if shared.GodSploitInjected and isfile("savedModulesFile.json") then
+	if not shared.GodSploitInjected then return end
+	if isfile("savedModulesFile.json") then
 		local jsonencoded = httpService:JSONEncode(Settings)
 		writefile("savedModulesFile.json", jsonencoded)
 	end
@@ -322,6 +326,7 @@ end
 task.spawn(function()
 	while wait(5) do
 		saveSettings()
+		print("saved")
 	end
 end)
 

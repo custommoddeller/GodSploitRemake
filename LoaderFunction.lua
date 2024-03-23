@@ -501,7 +501,7 @@ function CreateWindow(options)
 			ButtonApi.UninjectConnection:Disconnect()
 		end)
 
-		Settings[options["Name"]] = enb
+		Settings[options["Name"]] = false
 		
 		return ButtonApi
 	end

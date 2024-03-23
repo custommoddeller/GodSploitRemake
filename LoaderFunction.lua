@@ -69,8 +69,10 @@ end
 
 
 function saveSettings()
-	local jsonencoded = httpService:JSONEncode(Settings)
-	writefile("savedModulesFile.json", jsonencoded)
+	if shared.GodSploitInjected then
+		local jsonencoded = httpService:JSONEncode(Settings)
+		writefile("savedModulesFile.json", jsonencoded)
+	end
 end
 
 function EntityNearPosition(distance)
@@ -756,13 +758,11 @@ UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
 
-task.spawn(function()
-	while wait(2) do
-		for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
-			print(v, e)
-		end
+function loadSettings()
+	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
+		Settings[v] = e
 	end
-end)
+end
 
 
 local endTick = tick() - startTick

@@ -9,6 +9,16 @@ Loaded = false
 
 local gserv = function(service) return game:GetService(service) end
 
+local httpService = gserv("HttpService")
+local tweenService = gserv("TweenService")
+local rbxanalytics = gserv("RbxAnalyticsService")
+local runService = gserv("RunService")
+local players = gserv("Players")
+local rStorage = gserv("ReplicatedStorage")
+local lplr = players.LocalPlayer
+local plrGui = lplr.PlayerGui
+local UIS = gserv("UserInputService")
+
 local GodSploit = {
 	Open = {Value = false},
 	UiWindows = 0,
@@ -32,6 +42,14 @@ local Settings = {
 	Uninject = false
 }
 
+function loadSettings()
+	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
+		Settings[v] = e
+		print(v, e, "ok")
+	end
+end
+
+loadSettings()
 
 function addDrag(obj)
 	obj.Draggable = true
@@ -39,15 +57,6 @@ function addDrag(obj)
 	obj.Active = true
 end
 
-local httpService = gserv("HttpService")
-local tweenService = gserv("TweenService")
-local rbxanalytics = gserv("RbxAnalyticsService")
-local runService = gserv("RunService")
-local players = gserv("Players")
-local rStorage = gserv("ReplicatedStorage")
-local lplr = players.LocalPlayer
-local plrGui = lplr.PlayerGui
-local UIS = gserv("UserInputService")
 local wearwarev2 = Instance.new("ScreenGui")
 
 local securityName = httpService:GenerateGUID(true)
@@ -312,20 +321,11 @@ function CreateMainFrame(args)
 	return Content
 end
 
-function loadSettings()
-	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
-		Settings[v] = e
-		print(v, e, "ok")
-	end
-end
-
 task.spawn(function()
 	while wait(5) do
-		loadSettings()
+		saveSettings()
 	end
 end)
-
-loadSettings()
 
 local tabs = CreateMainFrame()
 
@@ -513,7 +513,6 @@ function CreateWindow(options)
 
 			options.Callback(newValue)
 			Settings[options["Name"]] = newValue
-			saveSettings()
 		end
 		Button.MouseButton1Click:Connect(function()
 			enb = not enb

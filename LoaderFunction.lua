@@ -32,7 +32,7 @@ local GodSploit = {
 	}
 }
 
-local Settings = {
+local Settings = httpService:JSONDecode(readfile("savedModulesFile.json")) or {
 	Speed = false,
 	Highjump = false,
 	InfiniteJump = false,

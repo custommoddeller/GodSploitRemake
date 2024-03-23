@@ -515,7 +515,8 @@ task.spawn(function()
 	})
 	
 	local oldSpeed
-	combatWindow.CreateModule({
+	local Speed = {Enabled = false}
+	Speed = combatWindow.CreateModule({
 		Name = "Speed",
 		Callback = function(callback)
 			if callback then
@@ -534,7 +535,8 @@ task.spawn(function()
 	})
 	
 	local oldJump
-	blatantWindow.CreateModule({
+	local Highjump = {Enabled = false}
+	Highjump = blatantWindow.CreateModule({
 		Name = "Highjump",
 		Callback = function(callback)
 			if callback then
@@ -564,12 +566,13 @@ task.spawn(function()
 		WindowName = "Settings"
 	})
 	
-	local uninject = function() end
-	settingsWindow.CreateModule({
+	local uninjectModule = {Enabled = false}
+	uninjectModule = settingsWindow.CreateModule({
 		Name = "Uninject",
 		Callback = function(callback)
 			if callback then
 				uninject()
+				uninjectModule.ToggleButton(false)
 			end
 		end,
 	})

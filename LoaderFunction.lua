@@ -764,6 +764,7 @@ function loadSettings()
 	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
 		Settings[v] = e
 		GodSploit.modules[v].thing(e)
+		print(v.." is set to "..e)
 	end
 end
 

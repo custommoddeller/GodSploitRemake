@@ -22,6 +22,16 @@ local GodSploit = {
 	}
 }
 
+local Settings = {
+	Speed = false,
+	Highjmup = false,
+	InfiniteJump = false,
+	DirectionAssist = false,
+	FOVChanger = false,
+	Chams = false,
+	Uninject = false
+}
+
 function addDrag(obj)
 	obj.Draggable = true
 	obj.Selectable = true
@@ -490,6 +500,8 @@ function CreateWindow(options)
 			if enb then ButtonApi.ToggleButton(false) end
 			ButtonApi.UninjectConnection:Disconnect()
 		end)
+
+		Settings[options["Name"]] = Settings[options["Name"]]
 		
 		return ButtonApi
 	end
@@ -735,6 +747,45 @@ UIStroke.Color = Color3.fromRGB(255, 170, 0)
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
+
+
+local function CreateSave()
+	if not isfolder("Godsploit") then
+		makefolder("Godsploit")
+	end
+	if not isfile("Godsploit/Save") then
+		writefile("Godsploit/Save", "")
+	end
+end
+
+local function SaveSettings()
+	CreateSave()
+
+	EncodedJSON = httpService:JSONEncode(Settings)
+	writefile("Godsploit/Save", EncodedJSON)
+end
+
+local function LoadSettings()
+	local DecodedJSON = httpService:JSONDecode(readfile("Godsploit/Save"))
+
+	for i, v in DecodedJSON do
+		Settings[i] = v
+	end
+end
+
+CreateSave()
+wait(2)
+LoadSettings()
+
+task.spawn(function()
+	while wait(10) do
+		if not shared.GodSploitInjected then return end
+		
+		SaveSettings()
+		print("Saved settings prolly not lol")
+	end
+end)
+
 
 local endTick = tick() - startTick
 

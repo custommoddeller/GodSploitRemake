@@ -27,13 +27,13 @@ local DefaultSetting = {Properties = {Value = false}}
 local MetaTable = {__index, DefaultSetting.Properties}
 
 local Settings = {
-	Speed = {Enabled = false},
-	Highjmup = {Enabled = false},
-	InfiniteJump = {Enabled = false},
-	DirectionAssist = {Enabled = false},
-	FOVChanger	 = {Enabled = false},
-	Chams = {Enabled = false},
-	Uninject = {Enabled = false}
+	Speed = false,
+	Highjmup = false,
+	InfiniteJump = false,
+	DirectionAssist = false,
+	FOVChanger	 = false,
+	Chams = false,
+	Uninject = false
 }
 
 task.spawn(function()

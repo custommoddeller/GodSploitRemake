@@ -542,7 +542,7 @@ task.spawn(function()
 				oldSpeed = lplr.Character.Humanoid.WalkSpeed
 				lplr.Character.Humanoid.WalkSpeed = oldSpeed + 25
 				wsConnection = lplr.CharacterAdded:Connect(function()
-					wait(1)
+					repeat task.wait() until lplr.Character.Humanoid
 					oldSpeed = lplr.Character.Humanoid.WalkSpeed
 					lplr.Character.Humanoid.WalkSpeed = oldSpeed + 25
 				end)
@@ -568,7 +568,7 @@ task.spawn(function()
 				oldJump = lplr.Character.Humanoid.JumpPower
 				lplr.Character.Humanoid.JumpPower = oldJump + 25
 				hjConnection = lplr.CharacterAdded:Connect(function()
-					wait(1)
+					repeat task.wait() until lplr.Character.Humanoid
 					oldJump = lplr.Character.Humanoid.JumpPower
 					lplr.Character.Humanoid.JumpPower = oldJump + 25
 				end)

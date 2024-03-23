@@ -762,7 +762,14 @@ local function SaveSettings()
 end
 
 local function LoadSettings()
-	Settings = httpService:JSONDecode(readfile("GodsploitV2/Save.json"))
+	for _, v in GodSploit.modules do
+		if v ~= "Uninject" then
+			v.ToggleButton()
+		end
+	end
+	for _, v in GodSploit.modules do
+		print(v)
+	end
 end
 
 CreateSave()
@@ -773,6 +780,7 @@ task.spawn(function()
 		if not shared.GodSploitInjected then return end
 		
 		SaveSettings()
+		print("Saved settings prolly not lol")
 	end
 end)
 

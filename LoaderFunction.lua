@@ -22,9 +22,7 @@ local GodSploit = {
 	}
 }
 
-local Settings = {
-
-}
+local Settings = {}
 
 function addDrag(obj)
 	obj.Draggable = true
@@ -42,7 +40,6 @@ local lplr = players.LocalPlayer
 local plrGui = lplr.PlayerGui
 local UIS = gserv("UserInputService")
 local wearwarev2 = Instance.new("ScreenGui")
-
 local SaveFileName = "SavedModules.json"
 
 local function SaveSettings()
@@ -58,8 +55,6 @@ local function LoadSettings()
 
 	Loaded = true
 end
-
-LoadSettings()
 
 
 local securityName = httpService:GenerateGUID(true)

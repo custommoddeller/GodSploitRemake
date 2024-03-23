@@ -731,11 +731,9 @@ local function SaveSettings()
 end
 
 local function LoadSettings()
-	if isfile("GodSploitBedwarsConfigSaving/" .. SaveFileName) then
-		Settings = httpService:JSONDecode(readfile("GodSploitBedwarsConfigSaving/" .. SaveFileName))
+	Settings = httpService:JSONDecode(readfile("GodSploitBedwarsConfigSaving/" .. SaveFileName))
 
-		Loaded = true
-	end
+	Loaded = true
 end
 
 task.spawn(function()

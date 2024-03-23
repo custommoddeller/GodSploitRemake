@@ -713,6 +713,18 @@ UIS.InputBegan:Connect(function(input)
 	end
 end)
 
+function saveSettings()
+	if runService:IsStudio() then return end
+	
+	writefile(httpService:JSONEncode(GodSploit.modules))
+end
+
+while wait(5) do
+	if not shared.GodSploitInjected then return end
+	
+	saveSettings()
+end
+
 local openui = Instance.new("ImageButton")
 local UICorner = Instance.new("UICorner")
 local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")

@@ -511,10 +511,8 @@ function CreateWindow(options)
 			if enb then ButtonApi.ToggleButton(false) end
 			ButtonApi.UninjectConnection:Disconnect()
 		end)
-		
-		if not enb then
-			ButtonApi.ToggleButton(Settings[options["Name"]].Enabled)
-		end
+
+		ButtonApi.ToggleButton(Settings[options["Name"]].Enabled)
 		
 		return ButtonApi
 	end
@@ -781,7 +779,9 @@ end
 local function LoadSettings()
 	local DecodedJSON = httpService:JSONDecode(readfile("Godsploit/Save.json"))
 
-	Settings = DecodedJSON
+	for i, v in DecodedJSON do
+		Settings[i].Enabled = v
+	end
 end
 
 CreateSave()

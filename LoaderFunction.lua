@@ -501,7 +501,7 @@ function CreateWindow(options)
 			ButtonApi.UninjectConnection:Disconnect()
 		end)
 
-		Settings[options["Name"]] = Settings[options["Name"]]
+		Settings[options["Name"]] = enb
 		
 		return ButtonApi
 	end
@@ -749,37 +749,12 @@ UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
 
 
-local function CreateSave()
-	if not isfile("GodsploitSave") then
-		writefile("GodsploitSave", "")
-	end
-end
-
-local function SaveSettings()
-	CreateSave()
-
-	local EncodedJSON = httpService:JSONEncode(Settings)
-	writefile("GodsploitSave", EncodedJSON)
-end
-
-local function LoadSettings()
-	local DecodedJSON = httpService:JSONDecode(readfile("GodsploitSave"))
-
-	for i, v in DecodedJSON do
-		Settings[i] = v
-	end
-end
-
-CreateSave()
-wait(2)
-LoadSettings()
 
 task.spawn(function()
 	while wait(10) do
-		--if not shared.GodSploitInjected then return end
-		
-		SaveSettings()
-		print("Saved settings prolly not lol")
+		for _, e in Settings do
+			print(_, e)
+		end
 	end
 end)
 

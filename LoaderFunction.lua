@@ -22,7 +22,15 @@ local GodSploit = {
 	}
 }
 
-local Settings = {}
+local Settings = {
+	Speed = {Enabled = false},
+	Highjmup = {Enabled = false},
+	InfiniteJump = {Enabled = false},
+	DirectionAssist = {Enabled = false},
+	FOVChanger	 = {Enabled = false},
+	Chams = {Enabled = false},
+	Uninject = {Enabled = false}
+}
 
 function addDrag(obj)
 	obj.Draggable = true
@@ -40,7 +48,6 @@ local lplr = players.LocalPlayer
 local plrGui = lplr.PlayerGui
 local UIS = gserv("UserInputService")
 local wearwarev2 = Instance.new("ScreenGui")
-local SaveFileName = "SavedModules.json"
 
 local securityName = httpService:GenerateGUID(true)
 local securityId = math.random(1, 7654321)
@@ -58,6 +65,31 @@ uninject = function()
 	wearwarev2:SetAttribute(securityId, false)
 	wearwarev2:Destroy()
 end
+
+local function CreateSave()
+	if not isfolder("Godsploit") then
+		makefolder("Godsploit")
+	end
+	if not isfile("Godsploit/Save.json") then
+		writefile("Godsploit/Save.json", "")
+	end
+end
+
+local function SaveSettings()
+	CreateSave()
+
+	EncodedJSON = httpService:JSONEncode(Settings)
+	writefile("Godsploit/Save.json", EncodedJSON)
+end
+
+local function LoadSettings()
+	local DecodedJSON = httpService:JSONDecode(readfile("Godsploit/Save.json"))
+	
+	Settings = DecodedJSON
+end
+
+CreateSave()
+LoadSettings()
 
 function EntityNearPosition(distance)
 	for _, v in players:GetPlayers() do
@@ -481,14 +513,8 @@ function CreateWindow(options)
 			end
 			
 			options.Callback(newValue)
-			Settings[options.Name] = {Enabled = newValue}
+			Settings[options.Name].Enabled = newValue
 		end
-		if table.find(Settings, options["Name"]) then
-			if not enb then
-				ButtonApi.ToggleButton(Settings[options["Name"].Enabled])
-			end
-		end
-
 		Button.MouseButton1Click:Connect(function()
 			enb = not enb
 			ButtonApi.ToggleButton(enb)
@@ -499,6 +525,8 @@ function CreateWindow(options)
 			if enb then ButtonApi.ToggleButton(false) end
 			ButtonApi.UninjectConnection:Disconnect()
 		end)
+		
+		ButtonApi.ToggleButton(Settings[options["Name"]].Enabled)
 		
 		return ButtonApi
 	end
@@ -744,36 +772,6 @@ UIStroke.Color = Color3.fromRGB(255, 170, 0)
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
-
-local function CreateSave()
-	if not isfolder("GodsploitV2") then
-		makefolder("GodsploitV2")
-	end
-	if not isfile("GodsploitV2/Save.json") then
-		writefile("GodsploitV2/Save.json", "")
-	end
-end
-
-local function SaveSettings()
-	CreateSave()
-
-	EncodedJSON = httpService:JSONEncode(Settings)
-	writefile("GodsploitV2/Save.json", EncodedJSON)
-end
-
-local function LoadSettings()
-	for _, v in GodSploit.modules do
-		if v ~= "Uninject" then
-			v.ToggleButton()
-		end
-	end
-	for _, v in GodSploit.modules do
-		print(v)
-	end
-end
-
-CreateSave()
-LoadSettings()
 
 task.spawn(function()
 	while wait(10) do

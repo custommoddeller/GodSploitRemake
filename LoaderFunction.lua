@@ -71,7 +71,7 @@ end
 function saveSettings()
 	if shared.GodSploitInjected then
 		local jsonencoded = httpService:JSONEncode(Settings)
-		writefile("savedModulesFile.json", jsonencoded)
+		writefile("savedModulesFile2.json", jsonencoded)
 	end
 end
 
@@ -761,12 +761,14 @@ UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
 
 function loadSettings()
-	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
+	for v, e in httpService:JSONDecode(readfile("savedModulesFile2.json")) do
 		Settings[v] = e
 		GodSploit.modules[v].thing(e)
 		print(v.." is set to "..e)
 	end
 end
+
+loadSettings()
 
 
 local endTick = tick() - startTick

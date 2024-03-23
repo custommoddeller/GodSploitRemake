@@ -735,8 +735,6 @@ local function LoadSettings()
 end
 
 while wait(5) do
-	if not shared.GodSploitInjected then return end
-	
 	if Loaded then
 		SaveSettings()
 	end

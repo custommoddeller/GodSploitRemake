@@ -24,7 +24,7 @@ local GodSploit = {
 
 local Settings = {
 	Speed = false,
-	Highjmup = false,
+	Highjump = false,
 	InfiniteJump = false,
 	DirectionAssist = false,
 	FOVChanger = false,
@@ -752,8 +752,8 @@ openui.MouseButton1Click:Connect(godsploitui)
 
 task.spawn(function()
 	while wait(10) do
-		for _, e in Settings do
-			print(_, e)
+		for v, e in Settings do
+			print(v, e)
 		end
 	end
 end)

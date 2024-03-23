@@ -22,6 +22,10 @@ local GodSploit = {
 	}
 }
 
+local DefaultSetting = {Properties = {Value = false}}
+
+local MetaTable = {__index, DefaultSetting.Properties}
+
 local Settings = {
 	Speed = {Enabled = false},
 	Highjmup = {Enabled = false},
@@ -31,6 +35,13 @@ local Settings = {
 	Chams = {Enabled = false},
 	Uninject = {Enabled = false}
 }
+
+task.spawn(function()
+	for i, v in next, Settings do
+		setmetatable(v, MetaTable)
+	end
+end)
+
 
 function addDrag(obj)
 	obj.Draggable = true
@@ -501,7 +512,9 @@ function CreateWindow(options)
 			ButtonApi.UninjectConnection:Disconnect()
 		end)
 		
-		ButtonApi.ToggleButton(Settings[options["Name"]].Enabled)
+		if not enb then
+			ButtonApi.ToggleButton(Settings[options["Name"]].Enabled)
+		end
 		
 		return ButtonApi
 	end

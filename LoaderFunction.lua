@@ -484,7 +484,9 @@ function CreateWindow(options)
 			Settings[options.Name] = {Enabled = newValue}
 		end
 		if table.find(Settings, options["Name"]) then
-			ButtonApi.ToggleButton(Settings[options["Name"].Enabled])
+			if not enb then
+				ButtonApi.ToggleButton(Settings[options["Name"].Enabled])
+			end
 		end
 
 		Button.MouseButton1Click:Connect(function()

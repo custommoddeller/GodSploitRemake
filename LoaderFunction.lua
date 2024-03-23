@@ -32,6 +32,7 @@ local Settings = {
 	Uninject = false
 }
 
+
 function addDrag(obj)
 	obj.Draggable = true
 	obj.Selectable = true
@@ -64,6 +65,12 @@ uninject = function()
 	shared.GodSploitInjected = false
 	wearwarev2:SetAttribute(securityId, false)
 	wearwarev2:Destroy()
+end
+
+
+function saveSettings()
+	local jsonencoded = httpService:JSONEncode(Settings)
+	writefile("savedModulesFile.json", jsonencoded)
 end
 
 function EntityNearPosition(distance)
@@ -489,6 +496,7 @@ function CreateWindow(options)
 			
 			options.Callback(newValue)
 			Settings[options["Name"]] = newValue
+			saveSettings()
 		end
 		Button.MouseButton1Click:Connect(function()
 			enb = not enb
@@ -748,14 +756,8 @@ UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = openui
 openui.MouseButton1Click:Connect(godsploitui)
 
-function saveSettings()
-	local jsonencoded = httpService:JSONEncode(Settings)
-	writefile("savedModulesFile.json", jsonencoded)
-end
-
 task.spawn(function()
 	while wait(2) do
-		saveSettings()
 		for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
 			print(v, e)
 		end

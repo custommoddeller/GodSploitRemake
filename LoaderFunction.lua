@@ -39,7 +39,7 @@ local wearwarev2 = Instance.new("ScreenGui")
 
 
 local securityName = httpService:GenerateGUID(true)
-local securityId = math.random(1, 9e9)
+local securityId = math.random(1, 7654321)
 
 wearwarev2:SetAttribute(securityId, true)
 local GodSploitInfo = {

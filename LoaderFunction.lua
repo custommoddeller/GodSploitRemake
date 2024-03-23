@@ -480,7 +480,7 @@ function CreateWindow(options)
 		
 		ButtonApi.UninjectConnection = nil
 		ButtonApi.UninjectConnection = wearwarev2:GetAttributeChangedSignal(securityId):Connect(function()
-			ButtonApi.ToggleButton(false)
+			if enb then ButtonApi.ToggleButton(false) end
 			ButtonApi.UninjectConnection:Disconnect()
 		end)
 		
@@ -572,7 +572,7 @@ task.spawn(function()
 	Name = "FOVChanger",
 		Callback = function(callback)
 			if callback then
-				oldFOV = workspace.FieldOfView
+				oldFOV = workspace.Camera.FieldOfView
 				workspace.Camera.FieldOfView = 120
 			else
 				workspace.Camera.FieldOfView = oldFOV

@@ -55,6 +55,12 @@ uninject = function()
 	wearwarev2:Destroy()
 end
 
+function EntityNearPosition(distance)
+	for _, v in players:GetPlayers() do
+		if (v.Character.PrimaryPart.Position - lplr.Character.PrimaryPart.Position).magnitude < distance and v ~= lplr then return v else continue end
+	end
+end
+
 local information = Instance.new("TextLabel")
 information.Name = "information"
 information.Parent = wearwarev2
@@ -375,8 +381,9 @@ function CreateWindow(options)
 	Content.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Content.BorderSizePixel = 0
 	Content.ClipsDescendants = true
-	Content.Position = UDim2.new(0, 0, 0.266, 0)
+	Content.Position = UDim2.new(0, 0, 0.134, 0)
 	Content.Size = UDim2.new(0.99999994, 0, -0.000734500471, 0)
+	Content.AnchorPoint = Vector2.new(0, 1)
 	scroll.Name = "scroll"
 	scroll.Parent = Content
 	scroll.Active = true
@@ -526,14 +533,12 @@ task.spawn(function()
 	})
 	
 	local oldSpeed
-	local Speed = {Enabled = false}
-	Speed = combatWindow.CreateModule({
+	local Speed = combatWindow.CreateModule({
 		Name = "Speed",
 		Callback = function(callback)
 			if callback then
 				oldSpeed = lplr.Character.Humanoid.WalkSpeed
 				lplr.Character.Humanoid.WalkSpeed = oldSpeed + 25
-				print(Speed.Enabled)
 			else
 				lplr.Character.Humanoid.WalkSpeed = oldSpeed
 			end
@@ -547,8 +552,7 @@ task.spawn(function()
 	})
 	
 	local oldJump
-	local Highjump = {Enabled = false}
-	Highjump = blatantWindow.CreateModule({
+	local Highjump = blatantWindow.CreateModule({
 		Name = "Highjump",
 		Callback = function(callback)
 			if callback then
@@ -565,10 +569,26 @@ task.spawn(function()
 	local utilityWindow = CreateWindow({
 		WindowName = "Utility"
 	})
-	
-	local FOVChanger = {Enabled = false}
+	local target = nil
+	local DirectionAssistLoop = nil
+	local DirectionAssist = utilityWindow.CreateModule({
+		Name = "DirectionAssist",
+		Callback = function(callback)
+			if callback then
+				runService:BindToRenderStep("DirectionAssistLoop", 1, function()
+					target = EntityNearPosition(10)
+					if target ~= nil then
+						print(target.Name)
+					end
+				end)
+			else
+				target = nil
+				runService:UnbindFromRenderStep("DirectionAssistLoop")
+			end
+		end,
+	})
 	local oldFOV
-	FOVChanger = utilityWindow.CreateModule({
+	local FOVChanger = utilityWindow.CreateModule({
 	Name = "FOVChanger",
 		Callback = function(callback)
 			if callback then
@@ -579,6 +599,8 @@ task.spawn(function()
 			end
 		end,
 	})
+	
+
 end)
 
 task.spawn(function()
@@ -592,8 +614,8 @@ task.spawn(function()
 		WindowName = "Settings"
 	})
 	
-	local uninjectModule = {Enabled = false}
-	uninjectModule = settingsWindow.CreateModule({
+	local uninjectModule = nil
+	local uninjectModule = settingsWindow.CreateModule({
 		Name = "Uninject",
 		Callback = function(callback)
 			if callback then

@@ -570,7 +570,7 @@ task.spawn(function()
 		Name = "InfiniteJump",
 		Callback = function(callback)
 			if callback then
-				infJumpConnection = rStorage.JumpRequest:Connect(function()
+				infJumpConnection = UIS.JumpRequest:Connect(function()
 					lplr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 				end)
 			else

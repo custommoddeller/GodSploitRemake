@@ -46,6 +46,11 @@ local GodSploitInfo = {
 	GameName = "BedWars"
 }
 
+uninject = function()
+	shared.GodSploitInjected = false
+	wearwarev2:Destroy()
+end
+
 local information = Instance.new("TextLabel")
 information.Name = "information"
 information.Parent = wearwarev2
@@ -630,8 +635,3 @@ wait(1)
 CreateNotification("GodSploit","look i reversed your name you are now "..string.reverse(lplr.Name).." :D", 7)
 wait(1)
 CreateNotification("Module Enabled","Fly (ok i didnt even enable anything but pretend i did)", 7)
-
-uninject = function()
-	shared.GodSploitInjected = false
-	wearwarev2:Destroy()
-end

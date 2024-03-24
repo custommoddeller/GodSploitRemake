@@ -105,12 +105,20 @@ function saveSettings()
 		local jsonencoded = httpService:JSONEncode(Settings)
 		writefile("savedModulesFile.json", jsonencoded)
 		print("saved")
+	else
+		local jsonencoded = httpService:JSONEncode(Settings)
+		writefile("savedModulesFile.json", jsonencoded)
+		print("saved")
 	end
 end
 
 function saveTabs()
 	if not shared.GodSploitInjected then return end
 	if isfile("savedTabsFile.json") then
+		local jsonencoded = httpService:JSONEncode(TabsThatAreOpen)
+		writefile("savedTabsFile.json", jsonencoded)
+		print("saved tabs")
+	else
 		local jsonencoded = httpService:JSONEncode(TabsThatAreOpen)
 		writefile("savedTabsFile.json", jsonencoded)
 		print("saved tabs")

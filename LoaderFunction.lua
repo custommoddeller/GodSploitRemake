@@ -416,15 +416,15 @@ function CreateTab(options)
 			tabApi.Enabled = val
 			if GodSploit.config.Tweens.Enabled then tweenService:Create(Tab2, TweenInfo.new(GodSploit.config.TweenSpeed.Value), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play() else Tab2.TextColor3 = Color3.fromRGB(255, 255, 255) end
 		end
-		--TabsThatAreOpen[options["TabName"]] = val
+		TabsThatAreOpen[options["TabName"]] = val
 	end
 	--if TabsThatAreOpen[options["TabName"]] == true then tabApi.enable(true) end
 	Tab.MouseButton1Click:Connect(function()
 		tabApi.Enabled = not tabApi.Enabled
 		tabApi.enable(tabApi.Enabled)
 	end)
-	task.wait(5)
-	tabApi.enable(true)
+	task.wait(1)
+	if TabsThatAreOpen[options["TabName"]] == true then tabApi.enable(true) end
 	return tabApi
 end
 

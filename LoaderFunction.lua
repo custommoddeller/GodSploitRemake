@@ -819,6 +819,10 @@ task.spawn(function()
 	loadSettings()
 end)
 
+task.spawn(function()
+	loadTabs()
+end)
+
 local endTick = tick() - startTick
 
 CreateNotification("GodSploit","Loaded in "..tostring(endTick):sub(1, 6).." seconds", 10)

@@ -768,8 +768,8 @@
 				if callback then
 					saveTabs = function() end
 					saveSettings = function() end
-					uninjectModule.ToggleButton(false)
 					uninject()
+					uninjectModule.ToggleButton(false)
 					
 				end
 			end,

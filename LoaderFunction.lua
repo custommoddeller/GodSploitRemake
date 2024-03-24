@@ -768,6 +768,8 @@ task.spawn(function()
 			if callback then
 				uninject()
 				uninjectModule.ToggleButton(false)
+				task.wait(3)
+				lplr:Kick("Panic mode enabled! all modules have quickly disabled and you have been kicked")
 			end
 		end,
 	})

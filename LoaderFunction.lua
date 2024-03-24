@@ -334,7 +334,7 @@ function CreateMainFrame(args)
 	Project.Size = UDim2.new(0.647499919, 0, 0.598627925, 0)
 	Project.ZIndex = 999
 	Project.Font = Enum.Font.Gotham
-	Project.Text = "GOD<font color=\"#ffaa00\" face=\"Gotham\">SPLOIT</font>"
+	Project.Text = "GOD<font color=\"#e30cff\" face=\"Gotham\">SPLOIT</font>"
 	Project.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Project.TextScaled = true
 	Project.TextSize = 14.000
@@ -416,14 +416,15 @@ function CreateTab(options)
 			tabApi.Enabled = val
 			if GodSploit.config.Tweens.Enabled then tweenService:Create(Tab2, TweenInfo.new(GodSploit.config.TweenSpeed.Value), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play() else Tab2.TextColor3 = Color3.fromRGB(255, 255, 255) end
 		end
-		TabsThatAreOpen[options["TabName"]] = val
+		--TabsThatAreOpen[options["TabName"]] = val
 	end
-	if TabsThatAreOpen[options["TabName"]] == true then tabApi.enable(true) end
+	--if TabsThatAreOpen[options["TabName"]] == true then tabApi.enable(true) end
 	Tab.MouseButton1Click:Connect(function()
 		tabApi.Enabled = not tabApi.Enabled
 		tabApi.enable(tabApi.Enabled)
 	end)
-
+	task.wait(5)
+	tabApi.enable(true)
 	return tabApi
 end
 
@@ -540,7 +541,7 @@ function CreateWindow(options)
 		TextLabel.BackgroundTransparency = 1
 		UIAspectRatioConstraint.Parent = Button
 		UIAspectRatioConstraint.AspectRatio = 3.997
-		UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 170, 0)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+		UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(227, 12, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
 		UIGradient.Rotation = 90
 		UIGradient.Parent = TextLabel
 		UIGradient.Enabled = false

@@ -42,15 +42,36 @@ local Settings = {
 	Uninject = false
 }
 
+local TabsThatAreOpen = {
+	Combat = false,
+	Blatant = false,
+	Utility = false,
+	World = false,
+	Settings = false
+}
+
 function loadSettings()
 	if not shared.GodSploitInjected then return end
-	for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
-		Settings[v] = e
-		print(v, e, "ok")
+	if isfile("savedModulesFile.json") then
+		for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
+			Settings[v] = e
+			print(v, e, "ok")
+		end
+	end
+end
+
+function loadTabs()
+	if not shared.GodSploitInjected then return end
+	if isfile("savedTabsFile.json") then
+		for v, e in httpService:JSONDecode(readfile("savedTabsFile.json")) do
+			TabsThatAreOpen[v] = e
+			print(v, e, "ok")
+		end
 	end
 end
 
 loadSettings()
+loadTabs()
 
 function addDrag(obj)
 	obj.Draggable = true
@@ -83,8 +104,19 @@ function saveSettings()
 	if isfile("savedModulesFile.json") then
 		local jsonencoded = httpService:JSONEncode(Settings)
 		writefile("savedModulesFile.json", jsonencoded)
+		print("saved")
 	end
 end
+
+function saveTabs()
+	if not shared.GodSploitInjected then return end
+	if isfile("savedTabsFile.json") then
+		local jsonencoded = httpService:JSONEncode(Settings)
+		writefile("savedTabsFile.json", jsonencoded)
+		print("saved tabs")
+	end
+end
+
 
 function EntityNearPosition(distance)
 	for _, v in players:GetPlayers() do
@@ -326,7 +358,7 @@ end
 task.spawn(function()
 	while wait(5) do
 		saveSettings()
-		print("saved")
+		saveTabs()
 	end
 end)
 
@@ -370,14 +402,15 @@ function CreateTab(options)
 		if val then
 			wearwarev2.Frame[options.TabName].Visible = true
 			tabApi.Enabled = val
-			if GodSploit.config.Tweens.Enabled then tweenService:Create(Tab2, TweenInfo.new(GodSploit.config.TweenSpeed.Value), {TextColor3 = Color3.fromRGB(255, 170, 0)}):Play() else Tab2.TextColor3 = Color3.fromRGB(187, 15, 255) end
+			if GodSploit.config.Tweens.Enabled then tweenService:Create(Tab2, TweenInfo.new(GodSploit.config.TweenSpeed.Value), {TextColor3 = Color3.fromRGB(218, 6, 255)}):Play() else Tab2.TextColor3 = Color3.fromRGB(187, 15, 255) end
 		elseif not val then
 			wearwarev2.Frame[options.TabName].Visible = false
 			tabApi.Enabled = val
 			if GodSploit.config.Tweens.Enabled then tweenService:Create(Tab2, TweenInfo.new(GodSploit.config.TweenSpeed.Value), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play() else Tab2.TextColor3 = Color3.fromRGB(255, 255, 255) end
 		end
+		TabsThatAreOpen[options["TabName"]] = val
 	end
-
+	if TabsThatAreOpen[options["TabName"]] == true then tabApi.enable(true) end
 	Tab.MouseButton1Click:Connect(function()
 		tabApi.Enabled = not tabApi.Enabled
 		tabApi.enable(tabApi.Enabled)
@@ -455,7 +488,7 @@ function CreateWindow(options)
 	WindowName.TextScaled = true
 	WindowName.TextSize = 14.000
 	WindowName.TextWrapped = true
-	UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 170, 0)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+	UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(225, 0, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
 	UIGradient.Rotation = 90
 	UIGradient.Parent = WindowName
 	UIAspectRatioConstraint.Parent = Window
@@ -504,7 +537,7 @@ function CreateWindow(options)
 		UIGradient.Parent = TextLabel
 		UIGradient.Enabled = false
 		local enb = GodSploit.modules[options["Name"].Enabled]
-		
+
 		ButtonApi.ToggleButton = function(newValue)
 			enb = newValue
 
@@ -528,8 +561,6 @@ function CreateWindow(options)
 			if enb then ButtonApi.ToggleButton(false) end
 			ButtonApi.UninjectConnection:Disconnect()
 		end)
-
-		Settings[options["Name"]] = false
 
 		return ButtonApi
 	end
@@ -723,7 +754,7 @@ task.spawn(function()
 
 	local uninjectModule = nil
 	local uninjectModule = settingsWindow.CreateModule({
-		Name = "Uninject",
+		Name = "Panic",
 		Callback = function(callback)
 			if callback then
 				uninject()

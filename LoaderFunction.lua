@@ -111,7 +111,7 @@ end
 function saveTabs()
 	if not shared.GodSploitInjected then return end
 	if isfile("savedTabsFile.json") then
-		local jsonencoded = httpService:JSONEncode(Settings)
+		local jsonencoded = httpService:JSONEncode(TabsThatAreOpen)
 		writefile("savedTabsFile.json", jsonencoded)
 		print("saved tabs")
 	end

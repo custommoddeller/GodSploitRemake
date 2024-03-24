@@ -5,7 +5,10 @@
 	shared.GodSploitInjected = true
 	Loaded = false
 
-	--local owner = ""
+	local saveFileSettingsName = "GodSploitSave/"..game.PlaceId.."settings.json"
+	local saveFileTabsName = "GodSploitSave/"..game.PlaceId.."tabs.json"
+
+--local owner = ""
 
 	local gserv = function(service) return game:GetService(service) end
 
@@ -52,8 +55,8 @@
 
 	function loadSettings()
 		if not shared.GodSploitInjected then return end
-		if isfile("savedModulesFile.json") then
-			for v, e in httpService:JSONDecode(readfile("savedModulesFile.json")) do
+	if isfile(saveFileSettingsName) then
+		for v, e in httpService:JSONDecode(readfile(saveFileSettingsName)) do
 				Settings[v] = e
 				print(v, e, "ok")
 			end
@@ -62,8 +65,8 @@
 
 	function loadTabs()
 		if not shared.GodSploitInjected then return end
-		if isfile("savedTabsFile.json") then
-			for v, e in httpService:JSONDecode(readfile("savedTabsFile.json")) do
+		if isfile(saveFileTabsName) then
+		for v, e in httpService:JSONDecode(readfile(saveFileTabsName)) do
 				TabsThatAreOpen[v] = e
 				print(v, e, "ok")
 			end
@@ -101,26 +104,26 @@
 
 	function saveSettings()
 		if not shared.GodSploitInjected then return end
-		if isfile("savedModulesFile.json") then
+		if isfile(saveFileSettingsName) then
 			local jsonencoded = httpService:JSONEncode(Settings)
-			writefile("savedModulesFile.json", jsonencoded)
+			writefile(saveFileSettingsName, jsonencoded)
 			print("saved")
 		else
 			local jsonencoded = httpService:JSONEncode(Settings)
-			writefile("savedModulesFile.json", jsonencoded)
+			writefile(saveFileSettingsName, jsonencoded)
 			print("saved")
 		end
 	end
 
 	function saveTabs()
 		if not shared.GodSploitInjected then return end
-		if isfile("savedTabsFile.json") then
+		if isfile(saveFileTabsName) then
 			local jsonencoded = httpService:JSONEncode(TabsThatAreOpen)
-			writefile("savedTabsFile.json", jsonencoded)
+			writefile(saveFileTabsName, jsonencoded)
 			print("saved tabs")
 		else
 			local jsonencoded = httpService:JSONEncode(TabsThatAreOpen)
-			writefile("savedTabsFile.json", jsonencoded)
+			writefile(saveFileTabsName, jsonencoded)
 			print("saved tabs")
 		end
 	end
